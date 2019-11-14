@@ -11,7 +11,7 @@
           ></v-img>
         </v-col>
       </v-row>
-      <Login/>
+      <SignUp/>
       <v-row no-gutters>
         <v-col xs="12" sm="8" offset-sm="2" md="6" offset-md="3">
           <v-img
@@ -22,9 +22,9 @@
       </v-row>
       <v-row>
         <v-col class="text-center" xs="12" sm="8" offset-sm="2" md="6" offset-md="3">
-          Don't have an account?
-          <v-btn block dark class="mt-3" color="green" @click="goSetup">
-            SIGN UP
+          Already have an account?
+          <v-btn block dark class="mt-3" color="green" @click="goHome">
+            LOG IN
           </v-btn>
         </v-col>
       </v-row>
@@ -35,16 +35,16 @@
 <script lang="ts">
 // @ is an alias to /src
 import { Vue, Component } from 'vue-property-decorator';
-import Login from '@/components/Login.vue';
+import SignUp from '@/components/SignUp.vue';
 
 @Component({
   components: {
-    Login,
+    SignUp,
   },
 })
-export default class Home extends Vue {
-  private goSetup(): void {
-    this.$router.push('setup');
+export default class SetUp extends Vue {
+  private goHome(): void {
+    this.$router.push('/');
   }
 }
 </script>
