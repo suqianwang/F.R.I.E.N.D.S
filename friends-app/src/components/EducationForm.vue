@@ -28,11 +28,20 @@ import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator';
   components: {}
 })
 export default class EducationForm extends Vue {
-  @Prop() private firstStep!: boolean;
-  @Prop() private secondStep!: boolean;
+  // @Prop() private firstStep!: boolean;
+  // @Prop() private secondStep!: boolean;
 
-  private majors: string[] = ['foo', 'bar'];
-  private degrees: string[] = ['fizz', 'buzz'];
+  private majors: string[] = ['African and African American Studies', 'Art History', 'Asian and Middle Eastern Studies',
+  'Biology', 'Biomedical Engineering', 'Biophysics', 'Brazilian and Global Portuguese Studies', 'Chemistry',
+  'Civil Engineering', 'Classical Civilization', 'Classical Languages', 'Computer Science', 'Cultural Anthropology',
+  'Dance', 'Earth and Ocean Sciences', 'Economics', 'Electrical and Computer Engineering', 'English', 'Environmental Engineering',
+  'Environmental Sciences', 'Environmental Sciences and Policy', 'Evolutionary Anthropology', 'French Studies', 'Gender, Sexuality, and Feminist Studies',
+  'German', 'Global Cultural Studies', 'Global Health', 'History', 'Interdepartmental Major', 'International Comparative Studies',
+  'Italian Studies', 'Linguistics', 'Mathematics', 'Mechanical Engineering', 'Medieval and Renaissance Studies', 'Music',
+  'Neuroscience', 'Philosophy', 'Physics', 'Political Science', 'Program II', 'Psychology', 'Public Policy Studies', 'Religious Studies',
+  'Romance Studies', 'Russian', 'Slavic and Eurasian Studies', 'Sociology', 'Spanish, Latin American, and Latino/a Studies',
+  'Statistical Science', 'Theater Studies', 'Visual Arts', 'Visual and Media Studies', 'Others'];
+  private degrees: string[] = ['Bachelors', 'Masters', 'PHD', 'Others'];
   private selectedMajor: string = '';
   private selectedDegree: string = '';
   private test: string = '';
@@ -59,11 +68,11 @@ export default class EducationForm extends Vue {
   }
 
   @Emit('finished_one')
+  private finishedHelper(major: string, degree: string): void {
+  }
+
   private finished(): void {
-    // if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
-    //   /**/
-    // }
-    /**/
+      this.finishedHelper(this.selectedMajor, this.selectedDegree);
   }
 }
 </script>

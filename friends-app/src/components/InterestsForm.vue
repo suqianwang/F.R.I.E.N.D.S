@@ -12,7 +12,10 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-btn @click="finished" block color="pink">NEXT</v-btn>
+            <v-btn @click="backEducationForm" block color="blue">BACK</v-btn>
+          </v-card-actions>
+          <v-card-actions>
+            <v-btn @click="finished" block color="pink" :disabled="!valid">NEXT</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -21,22 +24,39 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
+import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator';
 
 @Component({
   components: {}
 })
 export default class InterestsForm extends Vue {
-  @Prop() private firstStep!: boolean;
-  @Prop() private secondStep!: boolean;
-
-  private interests: string[] = ['foo', 'bar', 'fizz', 'buzz'];
+  private interests: string[] = ['MUSIC', 'MOVIES & TV', 'FITNESS & SPORTS', 'PETS', 'GAMES', 'FOOD & DRINK',
+  'SHOPPING & FASHION', 'ARTS', 'TRAVEL', 'READING'];
   private selectedInterests: string[] = [];
-  private test: string = '';
   private selectRules = [(v: any) => v.length === 3 || 'You need to select exactly 3 items']
+  private valid: boolean = false;
 
-  @Emit('finished_one')
-  private finished(): void {/**/}
+  @Watch('selectedInterests')
+  private onSelectedInterestsChange(): void {
+    if (this.selectedInterests.length === 3) {
+      this.valid = true;
+    }
+    else {
+      this.valid = false;
+    }
+  }
+
+  @Emit('back_two')
+  private backEducationForm(): void {
+  }
+
+  @Emit('finished_two')
+  private finishedHelper(interests: string[]): void {
+  }
+
+  private finished(): void {
+    this.finishedHelper(this.selectedInterests);
+  }
 }
 </script>
 
