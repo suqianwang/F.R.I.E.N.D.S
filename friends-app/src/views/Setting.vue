@@ -23,6 +23,7 @@
                 <div><h3>③ {{decidedInterests[2]}}: {{decidedSpecificInterests[6]}}, {{decidedSpecificInterests[7]}}, {{decidedSpecificInterests[8]}}</h3></div>
                 <div><h3><b>Gender</b>: {{decidedGender}}</h3></div>
                 <div><h3><b>Name</b>: {{decidedName}}</h3></div>
+                <div><h3><b>Userame</b>: {{decidedUsername}}</h3></div>
               </v-form>
             </v-card-text>
             <v-card-actions>

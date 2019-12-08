@@ -35,6 +35,7 @@ import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator';
 export default class AboutMeForm extends Vue {
   private genderList: string[] = ['MALE', 'FEMALE', 'OTHER', 'PREFER NOT TO ANSWER'];
   private nameRules = [(v: any) => !!v || 'Name is required', (v: any) => v.length <= 30 || 'Name must be less than 30 characters',]
+  private usernameRules = [(v: any) => !!v || 'Username is required', (v: any) => v.length <= 30 || 'Username must be less than 30 characters',]
   private valid: boolean = false;
   private selectedGender: string = '';
   private inputtedFirstName: string = '';
@@ -71,6 +72,16 @@ export default class AboutMeForm extends Vue {
     }
   }
 
+  @Watch('inputtedUsername')
+  private onInputtedUsernameChange(): void {
+    if (!(this.selectedGender === '' || this.inputtedFirstName === '' || this.inputtedLastName === '' || this.inputtedUsername === '')) {
+      this.valid = true;
+    }
+    else {
+      this.valid = false;
+    }
+  }
+
   @Emit('back_four')
   private backSpecificInterestsForm(): void {
   }
@@ -80,7 +91,7 @@ export default class AboutMeForm extends Vue {
   }
 
   private finished(): void {
-    const fullName = this.inputtedLastName + ' ' + this.inputtedFirstName;
+    const fullName = this.inputtedFirstName + ' ' + this.inputtedLastName;
     this.finishedHelper(this.selectedGender, fullName, this.inputtedUsername);
   }
 }
