@@ -7,27 +7,35 @@
             <v-toolbar-title>Login Form</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form>
+            <v-form v-model="valid" ref="form" lazy-validation>
               <v-text-field
                 prepend-icon="email"
-                name="login"
+                name="email"
                 label="Duke Email"
                 suffix="@duke.edu"
-                id="login"
+                id="email"
                 type="text"
+                :rules="[v => !!v || 'Duke Email is required']"
+                required
+                v-model="email"
               ></v-text-field>
               <v-text-field
                 prepend-icon="lock"
                 name="password"
                 label="Password"
+                @click:append="() => (value = !value)"
+                :append-icon="value ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="value ? 'password' : 'text'"
                 id="password"
-                type="password"
+                :rules="passwordRules"
+                required
+                v-model="password"
               ></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <!-- <v-spacer></v-spacer> -->
-            <v-btn block dark color="pink">LOG IN</v-btn>
+            <v-btn @click="goMainPage" block dark color="pink">LOG IN</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -42,8 +50,19 @@ import { Vue, Component } from 'vue-property-decorator';
   components: {}
 })
 export default class Login extends Vue {
-  private username: string = '';
+  private email: string = '';
   private password: string = '';
+  private valid: boolean = true;
+  private value: boolean = true;
+  private passwordRules = [
+    (v: any) => !!v || 'Password is required',
+  ]
+
+  private goMainPage() {
+    if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
+      console.log('go Main Page if Matched');
+    }
+  }
 }
 </script>
 

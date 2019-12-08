@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import SetUp from '../views/SetUp.vue';
 import Setting from '../views/Setting.vue';
+import Main from '../views/Main.vue';
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/setting',
     name: 'setting',
     component: Setting,
+  },
+  {
+    path: '/main',
+    name: 'main',
+    component: Main,
   },
   {
     path: '/about',

@@ -68,6 +68,7 @@ export default class Setting extends Vue {
   private decidedSpecificInterests: string[] = [];
   private decidedGender: string = '';
   private decidedName: string = '';
+  private decidedUsername: string = '';
 
   private firstFinished(majorFromChild1: string, degreeFromChild1: string): void {
     this.firstStep = false;
@@ -88,11 +89,12 @@ export default class Setting extends Vue {
     this.decidedSpecificInterests = specificInterestsFromChild3;
   }
 
-  private fourthFinished(genderFromChild4: string, nameFromChild4: string): void {
+  private fourthFinished(genderFromChild4: string, nameFromChild4: string, usernameFromChild4: string): void {
     this.fourthStep = false;
     this.finalStep = true;
     this.decidedGender = genderFromChild4;
     this.decidedName = nameFromChild4;
+    this.decidedUsername = usernameFromChild4;
   }
 
   private backEducationForm(): void {

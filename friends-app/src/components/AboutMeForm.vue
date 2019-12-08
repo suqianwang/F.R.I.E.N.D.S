@@ -11,6 +11,7 @@
               <v-select :items="genderList" label="Gender" :rules="[v => !!v || 'Gender is required']" outlined v-model="selectedGender" required></v-select>
               <v-text-field v-model="inputtedFirstName" :rules="nameRules" :counter="30" label="First Name" required></v-text-field>
               <v-text-field v-model="inputtedLastName" :rules="nameRules" :counter="30" label="Last Name" required></v-text-field>
+              <v-text-field v-model="inputtedUsername" :rules="usernameRules" :counter="30" label="Username" required></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
@@ -38,10 +39,11 @@ export default class AboutMeForm extends Vue {
   private selectedGender: string = '';
   private inputtedFirstName: string = '';
   private inputtedLastName: string = '';
+  private inputtedUsername: string = '';
 
   @Watch('selectedGender')
   private onSelectedGenderChange(): void {
-    if (!(this.selectedGender === '' || this.inputtedFirstName === '' || this.inputtedLastName === '')) {
+    if (!(this.selectedGender === '' || this.inputtedFirstName === '' || this.inputtedLastName === '' || this.inputtedUsername === '')) {
       this.valid = true;
     }
     else {
@@ -51,7 +53,7 @@ export default class AboutMeForm extends Vue {
 
   @Watch('inputtedFirstName')
   private onInputtedFirstNameChange(): void {
-    if (!(this.selectedGender === '' || this.inputtedFirstName === '' || this.inputtedLastName === '')) {
+    if (!(this.selectedGender === '' || this.inputtedFirstName === '' || this.inputtedLastName === '' || this.inputtedUsername === '')) {
       this.valid = true;
     }
     else {
@@ -61,7 +63,7 @@ export default class AboutMeForm extends Vue {
 
   @Watch('inputtedLastName')
   private onInputtedLastNameChange(): void {
-    if (!(this.selectedGender === '' || this.inputtedFirstName === '' || this.inputtedLastName === '')) {
+    if (!(this.selectedGender === '' || this.inputtedFirstName === '' || this.inputtedLastName === '' || this.inputtedUsername === '')) {
       this.valid = true;
     }
     else {
@@ -74,12 +76,12 @@ export default class AboutMeForm extends Vue {
   }
 
   @Emit('finished_four')
-  private finishedHelper(gender: string, name: string): void {
+  private finishedHelper(gender: string, name: string, username: string): void {
   }
 
   private finished(): void {
     const fullName = this.inputtedLastName + ' ' + this.inputtedFirstName;
-    this.finishedHelper(this.selectedGender, fullName);
+    this.finishedHelper(this.selectedGender, fullName, this.inputtedUsername);
   }
 }
 </script>
