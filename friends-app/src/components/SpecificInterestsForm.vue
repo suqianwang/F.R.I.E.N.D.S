@@ -63,16 +63,16 @@ import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator';
 export default class SpecificInterestsForm extends Vue {
   @Prop() private interests!: string[];
 
-  private specificMusic: string[] = ['Music1', 'Music2', 'Music3', 'Music4', 'Music5', 'Music6', 'Music7', 'Music8'];
-  private specificMovies: string[] = ['Movie1', 'Movie2', 'Movie3', 'Movie4', 'Movie5', 'Movie6', 'Movie7', 'Movie8'];
-  private specificSports: string[] = ['Sports1', 'Sports2', 'Sports3', 'Sports4', 'Sports5', 'Sports6', 'Sports7', 'Sports8'];
-  private specificPets: string[] = ['Pets1', 'Pets2', 'Pets3', 'Pets4', 'Pets5', 'Pets6', 'Pets7', 'Pets8'];
-  private specificGames: string[] = ['Game1', 'Game2', 'Game3', 'Game4', 'Game5', 'Game6', 'Game7', 'Game8'];
-  private specificFood: string[] = ['Food1', 'Food2', 'Food3', 'Food4', 'Food5', 'Food6', 'Food7', 'Food8'];
-  private specificShopping: string[] = ['Shop1', 'Shop2', 'Shop3', 'Shop4', 'Shop5', 'Shop6', 'Shop7', 'Shop8'];
-  private specificArts: string[] = ['Arts1', 'Arts2', 'Arts3', 'Arts4', 'Arts5', 'Arts6', 'Arts7', 'Arts8'];
-  private specificTravel: string[] = ['Travel1', 'Travel2', 'Travel3', 'Travel4', 'Travel5', 'Travel6', 'Travel7', 'Travel8'];
-  private specificReading: string[] = ['Read1', 'Read2', 'Read3', 'Read4', 'Read5', 'Read6', 'Read7', 'Read8'];
+  private specificMusic: string[] = ['Blues', 'Classical', 'Country', 'Dance', 'Electronic', 'Gospel', 'Heavy', 'Hip Hop', 'Jazz', 'Pop', 'Rock', 'Soul'];   // 12
+  private specificMovies: string[] = ['Action', 'Animation', 'Bollywood', 'Comedy', 'Documentary', 'Drama', 'Fantasy', 'Horror', 'Musical', 'Science', 'Thriller'];   // 11
+  private specificSports: string[] = ['Baseball', 'Basketball', 'Football', 'Golf', 'Marathon', 'Racing', 'Ski', 'Snowboard', 'Soccer', 'Swimming', 'Tennis', 'Thriathlon', 'Volleyball'];   // 13
+  private specificPets: string[] = ['Bird', 'Cat', 'Dog', 'Fish', 'Hamster', 'Horse', 'Rabbit', 'Reptiles'];   // 8
+  private specificGames: string[] = ['Action', 'Adventure', 'Board', 'Card', 'Music', 'Puzzle', 'Racing', 'Role Playing', 'Simulation', 'Shooting', 'Sports'];   // 11
+  private specificFood: string[] = ['American', 'Chinese', 'French', 'German', 'Greek', 'Indian', 'Italian', 'Japanese', 'Korean', 'Latin American', 'Mexican', 'Middle Eastern', 'Spanish', 'Thai', 'Vietnamese'];   // 15
+  private specificShopping: string[] = ['Beauty Salon', 'Clothe', 'Cosmetic', 'Dress', 'Fragrance', 'Hair', 'Handbag', 'Jewelry', 'Shoes', 'SPA', 'Sunglass', 'Tattoo'];   // 12
+  private specificArts: string[] = ['Acting', 'Craft', 'Dance', 'Drawing', 'Drum', 'Fine Art', 'Guitar', 'Painting', 'Performing Art', 'Photography', 'Sculpture', 'Singing', 'Writing'];   // 13
+  private specificTravel: string[] = ['Adventure', 'Beach', 'Driving', 'Ecotourism', 'Flight', 'Hotel', 'Lake', 'Mountain', 'Nature', 'Theme Park', 'Tourism', 'Vacation'];   // 12
+  private specificReading: string[] = ['Book', 'Comic', 'E-book', 'Fiction', 'Litrature', 'Magazine', 'Manga', 'Mystery', 'Newspaper', 'Non-fiction', 'Romance'];   // 11
 
   private selectedSpecificsFirst: string[] = [];
   private selectedSpecificsSecond: string[] = [];
