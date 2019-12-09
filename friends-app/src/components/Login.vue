@@ -45,6 +45,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import { dbConfig } from '@/firebase/init';
 
 @Component({
   components: {}
@@ -60,7 +61,18 @@ export default class Login extends Vue {
 
   private goMainPage() {
     if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
-      console.log('go Main Page if Matched');
+      dbConfig.dbAuth.signInWithEmailAndPassword(this.email + '@duke.edu', this.password).then(
+        (user) => {
+          this.$router.push('main');
+        },
+        (error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(this.email);
+          console.log(errorCode);
+          console.log(errorMessage);
+        }
+      );
     }
   }
 }

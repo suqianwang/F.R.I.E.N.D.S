@@ -2,20 +2,10 @@
   <v-container>
     <v-row>
       <v-col xs="12" sm="8" offset-sm="2" md="6" offset-md="3">
-        <!-- <v-row justify="space-around">
-        <v-icon @click="model--">mdi-minus</v-icon>
-        {{ model }}
-        <v-icon @click="model++">mdi-plus</v-icon>
-        </v-row>-->
         <div><h1>Discover</h1></div>
         <div><h3>You might want to know them. Check them out!</h3></div>
         <v-carousel :show-arrows="false">
           <v-carousel-item v-for="(potentialFriend, i) in potentialFriends" :key="i">
-            <!-- <v-sheet :color="color" height="100%" tile>
-                <v-row class="fill-height" align="center" justify="center">
-                  <div class="display-3">Slide {{ i + 1 }}</div>
-                </v-row>
-            </v-sheet> -->
             <v-card class="elevation-12" height="100%" color="#deffe6">
               <v-card-text>
                 <div>
@@ -148,7 +138,8 @@ import { SettingState } from '@/store/SettingState';
 })
 export default class FriendsList extends Vue {
   private colors: string[] = ['primary', 'secondary', 'yellow darken-2', 'red', 'orange'];
-  private potentialFriends: SettingState[] = [
+  private potentialFriends: SettingState[] = [];
+  private dummyData: SettingState[] = [
     {email: 'yw314@duke.edu', password: 'qwerty', major: 'Electrical and Computer Engineering', degree: 'Masters', interests: ['MUSIC', 'MOVIES & TV', 'FITNESS & SPORTS'], specifics: ['Classical', 'Country', 'Dance', 'Documentary', 'Drama', 'Fantasy', 'Marathon', 'Racing', 'Basketball'], gender: 'MALE', name: 'Yunhe Wang', username: 'yxxxw'},
     {email: 'yw328@duke.edu', password: 'asdfgh', major: 'Computer Science', degree: 'Bachelors', interests: ['MUSIC', 'PETS', 'GAMES'], specifics: ['Gospel', 'Heavy', 'Hip Hop', 'Horse', 'Cat', 'Fish', 'Puzzle', 'Racing', 'Role Playing'], gender: 'FEMALE', name: 'Susan Chen', username: 'SCHN'},
     {email: 'yw342@duke.edu', password: 'zxcvbn', major: 'Biology', degree: 'PHD', interests: ['FOOD & DRINK', 'TRAVEL', 'SHOPPING & FASHION'], specifics: ['Indian', 'Italian', 'Japanese', 'Beach', 'Driving', 'Ecotourism', 'Fragrance', 'Hair', 'Handbag'], gender: 'MALE', name: 'Yun Yue', username: 'YUN'},
@@ -157,6 +148,14 @@ export default class FriendsList extends Vue {
     {email: 'yw384@duke.edu', password: 'xcvbnm', major: 'Linguistics', degree: 'Masters', interests: ['MUSIC', 'FITNESS & SPORTS', 'PETS'], specifics: ['Blues', 'Classical', 'Country', 'Ski', 'Snowboard', 'Soccer', 'Horse', 'Rabbit', 'Reptiles'], gender: 'MALE', name: 'Patrick Zhou', username: 'Pat'},
     {email: 'yw398@duke.edu', password: 'ertyui', major: 'History', degree: 'Masters', interests: ['FOOD & DRINK', 'GAMES', 'READING'], specifics: ['Middle Eastern', 'Spanish', 'Thai', 'Adventure', 'Board', 'Card', 'Manga', 'Mystery', 'Newspaper'], gender: 'FEMALE', name: 'Alice Shen', username: 'AS'},
   ];
+
+  private async created(): Promise<void> {
+    await this.init();
+  }
+
+  private async init(): Promise<void> {
+    this.potentialFriends = this.dummyData.slice(0, 5);
+  }
 }
 </script>
 

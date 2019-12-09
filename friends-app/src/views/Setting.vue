@@ -119,7 +119,7 @@ export default class Setting extends Vue {
   }
 
   private saveAndGoMainPage(): void {
-    console.log('Setting End');
+    this.$router.push('main');
   }
 }
 </script>
