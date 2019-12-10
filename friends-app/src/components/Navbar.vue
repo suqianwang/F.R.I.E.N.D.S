@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col xs="12" sm="8" offset-sm="2" md="6" offset-md="3">
-        <v-toolbar dense>
+        <v-toolbar dense color="#7ac6ff">
             <v-toolbar-title>F.R.I.E.N.D.S</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn @click="goHome" icon><v-icon>mdi-home</v-icon></v-btn>
