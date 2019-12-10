@@ -61,18 +61,14 @@ export default class Login extends Vue {
 
   private goMainPage() {
     if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
-      dbConfig.dbAuth.signInWithEmailAndPassword(this.email + '@duke.edu', this.password).then(
-        (user) => {
-          this.$router.push('main');
-        },
-        (error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(this.email);
-          console.log(errorCode);
-          console.log(errorMessage);
-        }
-      );
+      dbConfig.dbAuth.signInWithEmailAndPassword(this.email + '@duke.edu', this.password).then((user) => {
+        this.$router.push('main');
+      }).catch((err) => {
+        const errorCode = err.code;
+        const errorMessage = err.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+      });
     }
   }
 }

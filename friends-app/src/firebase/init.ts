@@ -15,5 +15,6 @@ firebase.initializeApp(firebaseConfig);
 export const dbConfig = {
     db: firebase.database(),
     dbAuth: firebase.auth(),
+    dbFireStore: firebase.firestore(),
     dbStorage: firebase.storage(),
 };

@@ -65,6 +65,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import { dbConfig } from '@/firebase/init';
 
 @Component({
   components: {}
@@ -86,7 +87,18 @@ export default class SignUp extends Vue {
 
   private goSetting() {
     if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
-      this.$router.push('setting');
+      dbConfig.dbAuth.createUserWithEmailAndPassword(this.email + '@duke.edu', this.password).then(
+        (user) => {
+          this.$router.push('setting');
+        },
+        (error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(this.email);
+          console.log(errorCode);
+          console.log(errorMessage);
+        }
+      );
     }
   }
 }

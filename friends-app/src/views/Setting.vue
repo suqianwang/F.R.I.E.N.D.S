@@ -47,6 +47,8 @@ import EducationForm from '@/components/EducationForm.vue';
 import InterestsForm from '@/components/InterestsForm.vue';
 import SpecificInterestsForm from '@/components/SpecificInterestsForm.vue';
 import AboutMeForm from '@/components/AboutMeForm.vue';
+import { dbConfig } from '@/firebase/init';
+import firebase from 'firebase';
 
 @Component({
   components: {
@@ -119,6 +121,18 @@ export default class Setting extends Vue {
   }
 
   private saveAndGoMainPage(): void {
+    // const settingsRef = dbConfig.db.ref('settings');
+    const user = dbConfig.dbAuth.currentUser!;   // TODO: NULL check needed
+    dbConfig.dbFireStore.collection('settings').add({
+      uid: user.uid,
+      major: this.decidedMajor,
+      degree: this.decidedDegree,
+      interests: this.decidedInterests,
+      specifics: this.decidedSpecificInterests,
+      gender: this.decidedGender,
+      name: this.decidedName,
+      username: this.decidedUsername
+    });
     this.$router.push('main');
   }
 }
