@@ -2,6 +2,19 @@
   <v-container>
     <v-row>
       <v-col xs="12" sm="8" offset-sm="2" md="6" offset-md="3">
+
+        <v-dialog v-model="dialog" persistent max-width="290">
+          <v-card>
+            <v-card-title class="headline">Are you sure you want to edit your profile?</v-card-title>
+            <v-card-text>By recreating your profile, your potential friends that will be matched may change as well.</v-card-text>
+            <v-card-actions>
+              <v-btn color="blue-grey darken-1" text @click="dialog = false">Cancel</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn color="green darken-1" text @click="goEditProfile">Yes</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
         <div><h1>Profile</h1></div>
         <div><h3>Your Profile</h3></div>
         <v-card class="elevation-12" color="#ffd4a3">
@@ -116,34 +129,35 @@
               <v-chip v-if="myData.interests[2] === 'READING'" class="ma-2" color="blue-grey" text-color="white"><v-avatar left><v-icon>mdi-book-open-variant</v-icon></v-avatar>{{myData.specifics[8]}}</v-chip>
             </div>
             <div class="pt-3">
-              <v-btn class="primary">Edit Profile</v-btn>
+              <v-btn color="primary" dark @click.stop="dialog = true">Modify Profile</v-btn>
             </div>
           </v-card-text>
         </v-card>
       </v-col>
+      <!-- <v-col xs="12" sm="8" offset-sm="2" md="6" offset-md="3">
+        Loading...
+      </v-col> -->
     </v-row>
   </v-container>
 </template>
 
 <script lang="ts">
 // @ is an alias to /src
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { SettingGetters, SettingActions, SettingMutations, Setting } from '@/store/Setting';
 import { SettingState } from '@/store/SettingState';
+import { dbConfig } from '@/firebase/init';
 
 @Component({
   components: {
   },
 })
 export default class Profile extends Vue {
-  private myData: SettingState = {email: '', password: '', major: '', degree: '', interests: [], specifics: [], gender: '', name: '', username: ''};
+  @Prop() private myData!: SettingState;
+  private dialog: boolean = false;
 
-  private async created(): Promise<void> {
-    await this.init();
-  }
-
-  private async init(): Promise<void> {
-      this.myData = {email: 'yw398@duke.edu', password: 'ertyui', major: 'History', degree: 'Masters', interests: ['FOOD & DRINK', 'GAMES', 'READING'], specifics: ['Middle Eastern', 'Spanish', 'Thai', 'Adventure', 'Board', 'Card', 'Manga', 'Mystery', 'Newspaper'], gender: 'FEMALE', name: 'Alice Shen', username: 'AS'}
+  private goEditProfile(): void {
+    this.$router.push('setting');
   }
 }
 </script>

@@ -30,8 +30,8 @@ import { Vue, Component, Prop, Emit, Watch } from 'vue-property-decorator';
   components: {}
 })
 export default class InterestsForm extends Vue {
-  private interests: string[] = ['MUSIC', 'MOVIES & TV', 'FITNESS & SPORTS', 'PETS', 'GAMES', 'FOOD & DRINK',
-  'SHOPPING & FASHION', 'ARTS', 'TRAVEL', 'READING'];
+  private interests: string[] = ['ARTS', 'FITNESS & SPORTS', 'FOOD & DRINK', 'GAMES', 'MOVIES & TV', 'MUSIC', 'PETS',
+  'READING', 'SHOPPING & FASHION', 'TRAVEL'];
   private selectedInterests: string[] = [];
   private selectRules = [(v: any) => v.length === 3 || 'You need to select exactly 3 items']
   private valid: boolean = false;
@@ -55,6 +55,7 @@ export default class InterestsForm extends Vue {
   }
 
   private finished(): void {
+    this.selectedInterests.sort();
     this.finishedHelper(this.selectedInterests);
   }
 }

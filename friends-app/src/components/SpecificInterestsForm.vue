@@ -121,6 +121,9 @@ export default class SpecificInterestsForm extends Vue {
 
   private finished(): void {
     const selectedNineSpecifics: string[] = [];
+    this.selectedSpecificsFirst.sort();
+    this.selectedSpecificsSecond.sort();
+    this.selectedSpecificsThird.sort();
     for (let i = 0; i < 9; i++) {
       if (i < 3) {
         selectedNineSpecifics.push(this.selectedSpecificsFirst[i]);
@@ -132,7 +135,6 @@ export default class SpecificInterestsForm extends Vue {
         selectedNineSpecifics.push(this.selectedSpecificsThird[i - 6]);
       }
     }
-    console.log('selectedNineSpecifics', selectedNineSpecifics);
     this.finishedHelper(selectedNineSpecifics);
   }
 }

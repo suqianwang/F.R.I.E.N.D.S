@@ -10,8 +10,6 @@ export const Setting = {
     namespaced: true,
 
     state: {
-        email: '',
-        password: '',
         major: '',
         degree: '',
         interests: [],
@@ -19,15 +17,10 @@ export const Setting = {
         gender: '',
         name: '',
         username: '',
+        friendsUID: [],
     } as SettingState,
 
     getters: {
-        getEmail(state: SettingState) {
-            return state.email;
-        },
-        getPassword(state: SettingState) {
-            return state.password;
-        },
         getMajor(state: SettingState) {
             return state.major;
         },
@@ -49,15 +42,12 @@ export const Setting = {
         getUsername(state: SettingState) {
             return state.username;
         },
+        getFriendsUID(state: SettingState) {
+            return state.friendsUID;
+        },
     },
 
     mutations: {
-        onEmailChanged(state: SettingState, email: string) {
-            state.email = email;
-        },
-        onPasswordChanged(state: SettingState, password: string) {
-            state.password = password;
-        },
         onMajorChanged(state: SettingState, major: string) {
             state.major = major;
         },
@@ -79,15 +69,12 @@ export const Setting = {
         onUsernameChanged(state: SettingState, username: string) {
             state.username = username;
         },
+        onFriendsUIDChanged(state: SettingState, friendsUID: string[]) {
+            state.friendsUID = friendsUID;
+        },
     },
 
     actions: {
-        async updateEmail(context: SettingContext, email: string): Promise<void> {
-            context.commit('onEmailChanged', email);
-        },
-        async updatePassword(context: SettingContext, password: string): Promise<void> {
-            context.commit('onPasswordChanged', password);
-        },
         async updateMajor(context: SettingContext, major: string): Promise<void> {
             context.commit('onMajorChanged', major);
         },
@@ -109,12 +96,13 @@ export const Setting = {
         async updateUsername(context: SettingContext, username: string): Promise<void> {
             context.commit('onUsernameChanged', username);
         },
+        async updateFriendsUID(context: SettingContext, friendsUID: string[]): Promise<void> {
+            context.commit('onFriendsUIDChanged', friendsUID);
+        },
     },
 };
 
 export const SettingGetters = {
-    getEmail: read(Setting.getters.getEmail),
-    getPassword: read(Setting.getters.getPassword),
     getMajor: read(Setting.getters.getMajor),
     getDegree: read(Setting.getters.getDegree),
     getInterests: read(Setting.getters.getInterests),
@@ -122,11 +110,10 @@ export const SettingGetters = {
     getGender: read(Setting.getters.getGender),
     getName: read(Setting.getters.getName),
     getUsername: read(Setting.getters.getUsername),
+    getFriendsUID: read(Setting.getters.getFriendsUID),
 };
 
 export const SettingActions = {
-    updateEmail: dispatch(Setting.actions.updateEmail),
-    updatePassword: dispatch(Setting.actions.updatePassword),
     updateMajor: dispatch(Setting.actions.updateMajor),
     updateDegree: dispatch(Setting.actions.updateDegree),
     updateInterests: dispatch(Setting.actions.updateInterests),
@@ -134,11 +121,10 @@ export const SettingActions = {
     updateGender: dispatch(Setting.actions.updateGender),
     updateName: dispatch(Setting.actions.updateName),
     updateUsername: dispatch(Setting.actions.updateUsername),
+    updateFriendsUID: dispatch(Setting.actions.updateFriendsUID),
 };
 
 export const SettingMutations = {
-    mutateEmail: commit(Setting.mutations.onEmailChanged),
-    mutatePassword: commit(Setting.mutations.onPasswordChanged),
     mutateMajor: commit(Setting.mutations.onMajorChanged),
     mutateDegree: commit(Setting.mutations.onDegreeChanged),
     mutateInterests: commit(Setting.mutations.onInterestsChanged),
@@ -146,4 +132,5 @@ export const SettingMutations = {
     mutateGender: commit(Setting.mutations.onGenderChanged),
     mutateName: commit(Setting.mutations.onNameChanged),
     mutateUsername: commit(Setting.mutations.onUsernameChanged),
+    mutateFriendsUID: commit(Setting.mutations.onFriendsUIDChanged),
 };

@@ -131,7 +131,8 @@ export default class Setting extends Vue {
       specifics: this.decidedSpecificInterests,
       gender: this.decidedGender,
       name: this.decidedName,
-      username: this.decidedUsername
+      username: this.decidedUsername,
+      friendsUID: []
     });
     this.$router.push('main');
   }

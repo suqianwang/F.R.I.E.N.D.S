@@ -1,6 +1,4 @@
 export interface SettingState {
-    email: string;
-    password: string;
     major: string;
     degree: string;
     interests: string[];   // length = 3
@@ -8,4 +6,5 @@ export interface SettingState {
     gender: string;
     name: string;
     username: string;
+    friendsUID: string[];
 };
