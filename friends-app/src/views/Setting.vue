@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <!-- <EducationForm v-if="firstStep" :firstStep="firstStep" :secondStep="secondStep" @finished_one="firstFinished"/> -->
     <EducationForm v-if="firstStep" @finished_one="firstFinished"/>
     <InterestsForm v-if="secondStep" @finished_two="secondFinished" @back_two="backEducationForm"/>
     <SpecificInterestsForm v-if="thirdStep" :interests="decidedInterests" @finished_three="thirdFinished" @back_three="backInterestsForm"/>
@@ -36,7 +35,6 @@
         </v-col>
       </v-row>
     </v-container>
-
   </v-app>
 </template>
 
@@ -72,6 +70,10 @@ export default class Setting extends Vue {
   private decidedGender: string = '';
   private decidedName: string = '';
   private decidedUsername: string = '';
+  private user!: any;
+  private userDoc!: any;
+  private userDocID!: string;
+  private firstTime: boolean = false;
 
   private firstFinished(majorFromChild1: string, degreeFromChild1: string): void {
     this.firstStep = false;
@@ -122,19 +124,53 @@ export default class Setting extends Vue {
 
   private saveAndGoMainPage(): void {
     // const settingsRef = dbConfig.db.ref('settings');
-    const user = dbConfig.dbAuth.currentUser!;   // TODO: NULL check needed
-    dbConfig.dbFireStore.collection('settings').add({
-      uid: user.uid,
-      major: this.decidedMajor,
-      degree: this.decidedDegree,
-      interests: this.decidedInterests,
-      specifics: this.decidedSpecificInterests,
-      gender: this.decidedGender,
-      name: this.decidedName,
-      username: this.decidedUsername,
-      friendsUID: []
-    });
-    this.$router.push('main');
+    if (this.firstTime === true) {
+      dbConfig.dbFireStore.collection('settings').add({
+        uid: this.user.uid,
+        major: this.decidedMajor,
+        degree: this.decidedDegree,
+        interests: this.decidedInterests,
+        specifics: this.decidedSpecificInterests,
+        gender: this.decidedGender,
+        name: this.decidedName,
+        username: this.decidedUsername,
+        friendsUID: []
+      }).then(() => this.$router.push('main'));
+    }
+    else {
+      dbConfig.dbFireStore.collection('settings').doc(this.userDocID).update({
+        major: this.decidedMajor,
+        degree: this.decidedDegree,
+        interests: this.decidedInterests,
+        specifics: this.decidedSpecificInterests,
+        gender: this.decidedGender,
+        name: this.decidedName,
+        username: this.decidedUsername,
+      }).then(() => this.$router.push('main'));
+    }
+  }
+
+  private async created(): Promise<void> {
+    await this.init();
+  }
+
+  private async init(): Promise<void> {
+    this.user = dbConfig.dbAuth.currentUser!;
+    const myUID = this.user.uid;
+    const myRef = dbConfig.dbFireStore.collection('settings').where('uid', '==', myUID);
+    myRef.get().then(snapshot => {
+      if (snapshot.empty === true) {
+        this.firstTime = true;
+      }
+      else {
+        snapshot.forEach(doc => {
+          this.userDoc = doc.data();
+          this.userDocID = doc.id;
+          console.log(this.userDocID);
+        })
+      }
+      console.log(this.firstTime);
+    })
   }
 }
 </script>
