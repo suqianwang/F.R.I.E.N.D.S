@@ -118,11 +118,11 @@
                   <v-chip v-if="potentialFriends[i].interests[2] === 'READING'" class="ma-2" color="blue-grey" text-color="white"><v-avatar left><v-icon>mdi-book-open-variant</v-icon></v-avatar>{{potentialFriends[i].specifics[8]}}</v-chip>
                 </div>
                 <div class="pt-3">
-                  <v-progress-circular v-if="i === 0" :rotate="360" :size="70" :width="10" :value="matchValue1" color="teal">{{ matchValue1 }}</v-progress-circular>
-                  <v-progress-circular v-if="i === 1" :rotate="360" :size="70" :width="10" :value="matchValue2" color="teal">{{ matchValue2 }}</v-progress-circular>
-                  <v-progress-circular v-if="i === 2" :rotate="360" :size="70" :width="10" :value="matchValue3" color="teal">{{ matchValue3 }}</v-progress-circular>
-                  <v-progress-circular v-if="i === 3" :rotate="360" :size="70" :width="10" :value="matchValue4" color="teal">{{ matchValue4 }}</v-progress-circular>
-                  <v-progress-circular v-if="i === 4" :rotate="360" :size="70" :width="10" :value="matchValue5" color="teal">{{ matchValue5 }}</v-progress-circular>
+                  <v-progress-circular v-if="i === 0" :rotate="360" :size="70" :width="10" :value="matchValue1" color="teal">{{ matchValue1.toFixed(1) }}%</v-progress-circular>
+                  <v-progress-circular v-if="i === 1" :rotate="360" :size="70" :width="10" :value="matchValue2" color="teal">{{ matchValue2.toFixed(1) }}%</v-progress-circular>
+                  <v-progress-circular v-if="i === 2" :rotate="360" :size="70" :width="10" :value="matchValue3" color="teal">{{ matchValue3.toFixed(1) }}%</v-progress-circular>
+                  <v-progress-circular v-if="i === 3" :rotate="360" :size="70" :width="10" :value="matchValue4" color="teal">{{ matchValue4.toFixed(1) }}%</v-progress-circular>
+                  <v-progress-circular v-if="i === 4" :rotate="360" :size="70" :width="10" :value="matchValue5" color="teal">{{ matchValue5.toFixed(1) }}%</v-progress-circular>
                   <v-btn icon color="black" height="60" width="60" class="ml-12"><v-icon size="70">mdi-arrow-right</v-icon></v-btn>
                 </div>
                 <div>
@@ -143,6 +143,11 @@ import { Vue, Component } from 'vue-property-decorator';
 import { SettingGetters, SettingActions, SettingMutations, Setting } from '@/store/Setting';
 import { SettingState } from '@/store/SettingState';
 
+export interface matchAlg {
+  idx: number;
+  percentage: number;
+}
+
 @Component({
   components: {
   },
@@ -157,18 +162,41 @@ export default class FriendsList extends Vue {
     {email: 'yw370@duke.edu', password: 'sdfghj', major: 'Computer Science', degree: 'PHD', interests: ['MOVIES & TV', 'SHOPPING & FASHION', 'ARTS'], specifics: ['Horror', 'Musical', 'Science', 'Handbag', 'Jewelry', 'Shoes', 'Performing Art', 'Photography', 'Sculpture'], gender: 'MALE', name: 'Andrew Hilton', username: 'Drew'},
     {email: 'yw384@duke.edu', password: 'xcvbnm', major: 'Linguistics', degree: 'Masters', interests: ['MUSIC', 'FITNESS & SPORTS', 'PETS'], specifics: ['Blues', 'Classical', 'Country', 'Ski', 'Snowboard', 'Soccer', 'Horse', 'Rabbit', 'Reptiles'], gender: 'MALE', name: 'Patrick Zhou', username: 'Pat'},
   ];
-  private matchValue1: number = 20;
-  private matchValue2: number = 40;
-  private matchValue3: number = 60;
-  private matchValue4: number = 80;
-  private matchValue5: number = 100;
+  private myData: SettingState = {email: '', password: '', major: '', degree: '', interests: [], specifics: [], gender: '', name: '', username: ''};
+  private matchValue1: number = 0;
+  private matchValue2: number = 0;
+  private matchValue3: number = 0;
+  private matchValue4: number = 0;
+  private matchValue5: number = 0;
 
   private async created(): Promise<void> {
     await this.init();
   }
 
   private async init(): Promise<void> {
-    this.potentialFriends = this.dummyData.slice(0, 5);
+    this.myData = {email: 'yw398@duke.edu', password: 'ertyui', major: 'History', degree: 'Masters', interests: ['FOOD & DRINK', 'GAMES', 'READING'], specifics: ['Middle Eastern', 'Spanish', 'Thai', 'Adventure', 'Board', 'Card', 'Manga', 'Mystery', 'Newspaper'], gender: 'FEMALE', name: 'Alice Shen', username: 'AS'}
+    const sortHelper: matchAlg[] = [];
+    for (let i = 0; i < this.dummyData.length; i++) {
+      let matched = 0;
+      for (let j = 0; j < 3; j++) {
+        const otherInterest = this.dummyData[i].interests[j]
+        if (this.myData.interests.includes(otherInterest)) {
+          matched += 1;
+        }
+      }
+      sortHelper.push({idx: i, percentage: 100 * matched / 3});
+    }
+    sortHelper.sort((a, b) => (a.percentage < b.percentage) ? 1 : -1);
+    console.log(sortHelper);
+    for (let i = 0; i < 5; i++) {
+      this.potentialFriends.push(this.dummyData[sortHelper[i].idx]);
+      if (i === 0) this.matchValue1 = sortHelper[i].percentage;
+      if (i === 1) this.matchValue2 = sortHelper[i].percentage;
+      if (i === 2) this.matchValue3 = sortHelper[i].percentage;
+      if (i === 3) this.matchValue4 = sortHelper[i].percentage;
+      if (i === 4) this.matchValue5 = sortHelper[i].percentage;
+    }
+    // this.potentialFriends = this.dummyData.slice(0, 5);
   }
 }
 </script>
