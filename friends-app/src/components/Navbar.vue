@@ -3,7 +3,7 @@
     <v-row>
       <v-col xs="12" sm="8" offset-sm="2" md="6" offset-md="3">
 
-        <v-dialog v-model="dialog" persistent max-width="290">
+        <v-dialog v-model="dialog" persistent max-width="320">
           <v-card>
             <v-card-title class="headline">Are you sure you want to Logout?</v-card-title>
             <v-card-text>You will be redirect to Login page and can come back at any time!</v-card-text>
@@ -29,6 +29,7 @@
 
 <script lang="ts">
 import { Vue, Component, Emit } from 'vue-property-decorator';
+import { dbConfig } from '@/firebase/init';
 
 @Component({
   components: {}
@@ -45,7 +46,14 @@ export default class Navbar extends Vue {
     }
 
     private confirmLogout(): void {
-      console.log('confirmLogout');
+      dbConfig.dbAuth.signOut().then((user) => {
+        this.$router.push('/');
+      }).catch((err) => {
+        const errorCode = err.code;
+        const errorMessage = err.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+      });
     }
 }
 </script>

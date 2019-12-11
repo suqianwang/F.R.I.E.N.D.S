@@ -3,7 +3,7 @@
     <v-row>
       <v-col xs="12" sm="8" offset-sm="2" md="6" offset-md="3">
 
-        <v-dialog v-model="dialog" persistent max-width="290">
+        <v-dialog v-model="dialog" persistent max-width="320">
           <v-card>
             <v-card-title class="headline">Are you sure you want to edit your profile?</v-card-title>
             <v-card-text>By recreating your profile, your potential friends that will be matched may change as well.</v-card-text>

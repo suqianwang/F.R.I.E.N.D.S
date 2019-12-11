@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Navbar @home_status="homeStatus" @profile_status="profileStatus"></Navbar>
-    <FriendsList :myData="myData" :othersData="otherSettingsTopFive" :matchValues="matchValues" v-if="atHome && loadedMyData && loadedOthersData"></FriendsList>
+    <FriendsList :myUID="myUID" :myDocData="myDocData" :myData="myData" :othersDocData="otherDocsTopFive" :othersData="otherSettingsTopFive" :matchValues="matchValues" :isFriends="isFriends" v-if="atHome && loadedMyData && loadedOthersData" @newFriend="changeIsFriends"></FriendsList>
     <Profile :myData="myData" v-else-if="atProfile && loadedMyData && loadedOthersData"></Profile>
     <v-container v-else>
       <v-row>
@@ -22,7 +22,7 @@ import Profile from '@/components/Profile.vue';
 import { dbConfig } from '@/firebase/init';
 import { SettingState } from '@/store/SettingState';
 
-export interface matchAlg {
+export interface MatchAlg {
   idx: number;
   percentage: number;
 }
@@ -40,10 +40,15 @@ export default class Main extends Vue {
   private atHome: boolean = true;
   private atProfile: boolean = false;
   private user!: any;
+  private myUID!: string;
+  private myDocData!: string;
   private myData: SettingState = {major: '', degree: '', interests: [], specifics: [], gender: '', name: '', username: '', friendsUID: []};
+  private otherDocsAll: string[] = [];
+  private otherDocsTopFive: string[] = ['', '', '', '', ''];
   private otherSettingsAll: SettingState[] = [];
   private otherSettingsTopFive: SettingState[] = [];
-  private matchValues: number[] = [];
+  private matchValues: number[] = [0, 0, 0, 0, 0];
+  private isFriends: boolean[] = [false, false, false, false, false];
   private loadedMyData: boolean = false;
   private loadedOthersData: boolean = false;
 
@@ -64,8 +69,8 @@ export default class Main extends Vue {
 
   private async init(): Promise<void> {
     this.user = dbConfig.dbAuth.currentUser!;
-    const myUID = this.user.uid;
-    const myRef = dbConfig.dbFireStore.collection('settings').where('uid', '==', myUID);
+    this.myUID = this.user.uid;
+    const myRef = dbConfig.dbFireStore.collection('settings').where('uid', '==', this.myUID);
     // this.myData = {major: 'History', degree: 'Masters', interests: ['FOOD & DRINK', 'GAMES', 'READING'], specifics: ['Middle Eastern', 'Spanish', 'Thai', 'Adventure', 'Board', 'Card', 'Manga', 'Mystery', 'Newspaper'], gender: 'FEMALE', name: 'Alice Shen', username: 'AS'}
     myRef.get().then(snapshot => {
       snapshot.forEach(doc => {
@@ -82,12 +87,13 @@ export default class Main extends Vue {
       this.loadedMyData = true;
       console.log('loaded myData', this.myData);
     }).then(() => {
-      const sortHelper: matchAlg[] = [];
+      const sortHelper: MatchAlg[] = [];
       let idx = 0;
       const otherRef = dbConfig.dbFireStore.collection('settings').get().then(snapshot => {
         snapshot.forEach(doc => {
-          let setting = doc.data();
+          const setting = doc.data();
           if (setting.uid !== this.user.uid) {
+            this.otherDocsAll.push(doc.id);
             this.otherSettingsAll.push({
               major: setting.major,
               degree: setting.degree,
@@ -103,23 +109,36 @@ export default class Main extends Vue {
               const otherInterest = setting.interests[i]
               if (this.myData.interests.includes(otherInterest)) { matched += 1; }
             }
-            sortHelper.push({idx: idx, percentage: 100 * matched / 3});
+            sortHelper.push({idx, percentage: 100 * matched / 3});
             idx += 1;
+          }
+          else {
+            this.myDocData = doc.id;
           }
         })
       }).then(() => {
         sortHelper.sort((a, b) => (a.percentage < b.percentage) ? 1 : -1);
         for (let i = 0; i < 5; i++) {
+          this.otherDocsTopFive[i] = this.otherDocsAll[sortHelper[i].idx];
           this.otherSettingsTopFive.push(this.otherSettingsAll[sortHelper[i].idx]);
-          this.matchValues.push(sortHelper[i].percentage);
+          this.matchValues[i] = sortHelper[i].percentage;
+          if (this.otherSettingsTopFive[i].friendsUID.includes(this.user.uid)) {
+            this.isFriends[i] = true;
+          }
         }
       }).then(() => {
-        console.log(this.otherSettingsAll);
         console.log(this.otherSettingsTopFive);
+        console.log(this.otherDocsTopFive);
         console.log(this.matchValues);
         this.loadedOthersData = true;
       });
     })
+  }
+
+  private changeIsFriends(idxFromChild: number) {
+    this.isFriends[idxFromChild] = !this.isFriends[idxFromChild];
+    console.log(idxFromChild);
+    console.log(this.isFriends);
   }
 }
 </script>
