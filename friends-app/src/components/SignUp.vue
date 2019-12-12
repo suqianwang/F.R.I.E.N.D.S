@@ -2,6 +2,14 @@
   <v-container>
     <v-row>
       <v-col xs="12" sm="8" offset-sm="2" md="6" offset-md="3">
+
+        <v-snackbar v-model="snackbar" :timeout="timeout" top vertical>
+          {{ errorMsg }}
+          <v-btn color="blue" text @click="snackbar = false">
+            Close
+          </v-btn>
+        </v-snackbar>
+
         <v-card class="elevation-12">
           <v-toolbar dark src="../assets/vbanner.webp">
             <v-toolbar-title>Sign Up Form</v-toolbar-title>
@@ -84,6 +92,9 @@ export default class SignUp extends Vue {
     (v: any) => /(?=.*\d)/.test(v) || 'Must have one number',
     (v: any) => /([!@$%])/.test(v) || 'Must have one special character [!@#$%]'
   ]
+  private snackbar: boolean = false;
+  private errorMsg: string = '';
+  private timeout: number = 6000;
 
   private goSetting() {
     if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
@@ -94,7 +105,8 @@ export default class SignUp extends Vue {
         (error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log(this.email);
+          this.errorMsg = errorMessage;
+          this.snackbar = true;
           console.log(errorCode);
           console.log(errorMessage);
         }

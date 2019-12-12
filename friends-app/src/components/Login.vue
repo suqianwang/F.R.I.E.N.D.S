@@ -2,6 +2,14 @@
   <v-container>
     <v-row>
       <v-col xs="12" sm="8" offset-sm="2" md="6" offset-md="3">
+
+        <v-snackbar v-model="snackbar" :timeout="timeout" top vertical>
+          {{ errorMsg }}
+          <v-btn color="blue" text @click="snackbar = false">
+            Close
+          </v-btn>
+        </v-snackbar>
+
         <v-card class="elevation-12">
           <v-toolbar dark src="../assets/vbanner.webp">
             <v-toolbar-title>Login Form</v-toolbar-title>
@@ -58,6 +66,9 @@ export default class Login extends Vue {
   private passwordRules = [
     (v: any) => !!v || 'Password is required',
   ]
+  private snackbar: boolean = false;
+  private errorMsg: string = '';
+  private timeout: number = 6000;
 
   private goMainPage() {
     if ((this.$refs.form as Vue & { validate: () => boolean }).validate()) {
@@ -66,6 +77,8 @@ export default class Login extends Vue {
       }).catch((err) => {
         const errorCode = err.code;
         const errorMessage = err.message;
+        this.errorMsg = errorMessage;
+        this.snackbar = true;
         console.log(errorCode);
         console.log(errorMessage);
       });
