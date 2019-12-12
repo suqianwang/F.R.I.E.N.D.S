@@ -1,15 +1,21 @@
 <template>
   <v-app>
-    <Navbar @home_status="homeStatus" @profile_status="profileStatus"></Navbar>
-    <FriendsList :myUID="myUID" :myDocData="myDocData" :myData="myData" :othersDocData="otherDocsTopFive" :othersData="otherSettingsTopFive" :matchValues="matchValues" :isFriends="isFriends" v-if="atHome && loadedMyData && loadedOthersData" @newFriend="changeIsFriends"></FriendsList>
-    <Profile :myData="myData" v-else-if="atProfile && loadedMyData && loadedOthersData"></Profile>
-    <v-container v-else>
-      <v-row>
-        <v-col xs="12" sm="8" offset-sm="2" md="6" offset-md="3">
-          <h1>Loading All Data...</h1>
-        </v-col>
-      </v-row>
-    </v-container>
+    <div v-if="!loaded">
+      <v-container>
+        <v-row>
+          <v-col xs="12" sm="8" offset-sm="2" md="6" offset-md="3">
+            <v-row align="center" justify="center" style="height: 600px;">
+              <v-progress-circular :size="100" :width="7" color="primary" indeterminate>Loading...</v-progress-circular>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
+    <div v-else>
+      <Navbar @home_status="homeStatus" @profile_status="profileStatus"></Navbar>
+      <FriendsList :myUID="myUID" :myDocData="myDocData" :myData="myData" :othersDocData="otherDocsTopFive" :othersData="otherSettingsTopFive" :matchValues="matchValues" :isFriends="isFriends" v-if="atHome" @newFriend="changeIsFriends" @loadingStart="startLoading" @loadingEnd="endLoading"></FriendsList>
+      <Profile :myData="myData" v-else-if="atProfile"></Profile>
+    </div>
   </v-app>
 </template>
 
@@ -49,9 +55,7 @@ export default class Main extends Vue {
   private otherSettingsTopFive: SettingState[] = [];
   private matchValues: number[] = [0, 0, 0, 0, 0];
   private isFriends: boolean[] = [false, false, false, false, false];
-  private loadedMyData: boolean = false;
-  private loadedOthersData: boolean = false;
-
+  private loaded: boolean = false;
 
   private homeStatus(): void {
     this.atHome = true;
@@ -84,7 +88,7 @@ export default class Main extends Vue {
         this.myData.friendsUID = doc.data().friendsUID;
       })
     }).then(() => {
-      this.loadedMyData = true;
+      // this.loadedMyData = true;
       console.log('loaded myData', this.myData);
     }).then(() => {
       const sortHelper: MatchAlg[] = [];
@@ -130,15 +134,26 @@ export default class Main extends Vue {
         console.log(this.otherSettingsTopFive);
         console.log(this.otherDocsTopFive);
         console.log(this.matchValues);
-        this.loadedOthersData = true;
+        // this.loadedOthersData = true;
+        this.loaded = true;
       });
     })
   }
 
   private changeIsFriends(idxFromChild: number) {
     this.isFriends[idxFromChild] = !this.isFriends[idxFromChild];
-    console.log(idxFromChild);
-    console.log(this.isFriends);
+    // console.log(idxFromChild);
+    // console.log(this.isFriends);
+  }
+
+  private startLoading() {
+    this.loaded = false;
+    console.log('startLoading', this.loaded);
+  }
+
+  private endLoading() {
+    this.loaded = true;
+    console.log('endLoading', this.loaded);
   }
 }
 </script>

@@ -17,7 +17,10 @@
 
         <div><h1>Discover</h1></div>
         <div><h3>You might want to know them. Check them out!</h3></div>
-        <v-carousel :show-arrows="false">
+        <v-row v-if="!loaded" align="center" justify="center" style="height: 450px;">
+          <v-progress-circular :size="100" :width="7" color="purple" indeterminate>Loading...</v-progress-circular>
+        </v-row>
+        <v-carousel :show-arrows="false" v-else>
           <v-carousel-item v-for="(otherData, i) in othersData" :key="i">
             <v-card class="elevation-12" height="100%" color="#deffe6">
               <v-card-text>
@@ -178,6 +181,7 @@ export default class FriendsList extends Vue {
   private opponentName: string = '';
   private idxNow: number = 0;
   private opponentUID: string = '';
+  private loaded: boolean = true;
 
   @Emit('newFriend')
   private alterFriendHelper(idx: number): void {
@@ -185,6 +189,7 @@ export default class FriendsList extends Vue {
 
   private alterFriend(idx: number): void {
     this.alterFriendHelper(idx);
+    this.loaded = false;
     this.dialog = false;
     const otherRef = dbConfig.dbFireStore.collection('settings').doc(this.othersDocData[idx]);
     otherRef.get().then(snapshot => {
@@ -222,6 +227,7 @@ export default class FriendsList extends Vue {
                 friendsUID: tmpFriendsUID2
               }).then(() => {
                 console.log('Friends List Update Finished');
+                this.loaded = true;
               })
             }
           })
