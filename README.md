@@ -11,7 +11,7 @@ Here is the demo for the prototype of the App: https://youtu.be/1cRWbcF2j_U
 Here if the promotional video design and created for the App: https://youtu.be/c1OsHj1MbV0
 
 ### Contribution
-Suqian Wang
+Suqian Wang, Yunhe Wang
 
 ## Application
 Here is the URL of the App: https://friendsapp-d15fb.web.app/
