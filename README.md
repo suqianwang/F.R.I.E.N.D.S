@@ -5,7 +5,9 @@ F.R.I.E.N.D.S is a social platform that matches Duke students together in the pu
 
 ## Define & Design
 Please refer to the presentation slides for the summary of our design thinking process: Empathy, Define, Ideate, Prototype, Test
+
 Here is the demo for the prototype of the App: https://youtu.be/1cRWbcF2j_U
+
 Here if the promotional video design and created for the App: https://youtu.be/c1OsHj1MbV0
 
 ### Contribution
@@ -14,7 +16,7 @@ Suqian Wang
 ## Application
 Here is the URL of the App: https://friendsapp-d15fb.web.app/
 
-### Contributions=
+### Contribution
 Yunhe Wang (@YunheWang0813)
 
 ### Technology
