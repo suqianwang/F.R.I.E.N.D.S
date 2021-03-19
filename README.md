@@ -81,5 +81,5 @@ Here is the URL of the App: https://friendsapp-d15fb.web.app/
 2. npm run serve
 
 ### Contribution
-Design: Suqian Wang
-Develop: Yunhe Wang (@YunheWang0813)
+* Design: Suqian Wang
+* Develop: Yunhe Wang (@YunheWang0813)
