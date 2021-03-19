@@ -4,20 +4,14 @@
 F.R.I.E.N.D.S is a social platform that matches Duke students together in the pursuit to create friendships. It is designed to help students find like-minded people that they can easily talk to through their shared likes and interests.
 
 ## Define & Design
-Please refer to the presentation slides for the summary of our design thinking process: Empathy, Define, Ideate, Prototype, Test
+* Please refer to the presentation slides for the summary of our design thinking process: Empathy, Define, Ideate, Prototype, Test
 
-Here is the demo for the prototype of the App: https://youtu.be/1cRWbcF2j_U
+* Here is the demo for the prototype of the App: https://youtu.be/1cRWbcF2j_U
 
-Here if the promotional video design and created for the App: https://youtu.be/c1OsHj1MbV0
-
-### Contribution
-Suqian Wang, Yunhe Wang
+* Here if the promotional video design and created for the App: https://youtu.be/c1OsHj1MbV0
 
 ## Application
 Here is the URL of the App: https://friendsapp-d15fb.web.app/
-
-### Contribution
-Yunhe Wang (@YunheWang0813)
 
 ### Technology
 ├── @fortawesome/fontawesome-free@5.11.2
@@ -85,3 +79,7 @@ Yunhe Wang (@YunheWang0813)
 ### Installation
 1. npm install
 2. npm run serve
+
+### Contribution
+* Design: Suqian Wang
+* Develop: Yunhe Wang (@YunheWang0813)
