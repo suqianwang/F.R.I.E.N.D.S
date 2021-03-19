@@ -6,6 +6,8 @@ F.R.I.E.N.D.S is a social platform that matches Duke students together in the pu
 ## Define & Design
 * Please refer to the presentation slides for the summary of our design thinking process: Empathy, Define, Ideate, Prototype, Test
 
+* Our design poster can be seen in poster.pdf
+
 * Here is the demo for the prototype of the App: https://youtu.be/1cRWbcF2j_U
 
 * Here if the promotional video design and created for the App: https://youtu.be/c1OsHj1MbV0
